@@ -1,0 +1,11 @@
+scipy
+matplotlib
+numpy
+sympy
+codecov
+pytest
+concurrencytest
+pyglet
+pandas
+vtk
+joblib
