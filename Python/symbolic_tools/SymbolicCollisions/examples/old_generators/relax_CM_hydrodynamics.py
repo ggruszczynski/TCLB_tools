@@ -1,5 +1,5 @@
 from sympy.printing import print_ccode
-from SymbolicCollisions.core.cm_symbols import omega_v, omega_b, Mraw_D2Q9, NrawD2Q9, S_relax_hydro_D2Q9
+from SymbolicCollisions.core.cm_symbols import omega_v, omega_b, D3Q27_r, Mraw_D3Q27, NrawD3Q27, S_relax_hydro_D2Q9
 from SymbolicCollisions.core.DiscreteCMTransforms import get_m00
 from SymbolicCollisions.core.printers import print_u2, print_as_vector, get_print_symbols_in_indx_notation
 from SymbolicCollisions.core.hardcoded_results import hardcoded_cm_eq_incompressible_D2Q9, \

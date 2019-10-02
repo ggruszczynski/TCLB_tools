@@ -128,6 +128,7 @@ hardcoded_F_cm_hydro_incompressible_D2Q9 = Matrix([
 ])
 
 # D3Q27 - notation for hydrodynamics as in TCLB's d3q27_pf_velocity model
+"""
 hardcoded_F_cm_hydro_incompressible_D3Q27 = Matrix([
     0,
     Fx / rho,
@@ -157,7 +158,7 @@ hardcoded_F_cm_hydro_incompressible_D3Q27 = Matrix([
     1 / 9. * Fz / rho,
     0,
 ])
-
+"""
 hardcoded_F_cm_Guo_hydro_incompressible_D2Q9 = Matrix([
     0,
     Fx / rho,
@@ -421,6 +422,7 @@ hardcoded_m_eq_D3Q27 = Matrix([
 ])
 
 # D3Q27 - notation for hydrodynamics as in TCLB's d3q27_pf_velocity model
+"""
 hardcoded_cm_eq_incompressible_D3Q27 = Matrix([
     m00,
     ux*(-m00 + 1),
@@ -450,3 +452,64 @@ hardcoded_cm_eq_incompressible_D3Q27 = Matrix([
     uz*(-m00*ux2*uy2 - 1/3.*m00*ux2 - 1/3.*m00*uy2 - 1/9.*m00 + ux2*uy2 + 1/3.*ux2 + 1/3.*uy2 + 1/9.),
     m00*ux2*uy2*uz2 + 1/3.*m00*ux2*uy2 + 1/3.*m00*ux2*uz2 + 1/9.*m00*ux2 + 1/3.*m00*uy2*uz2 + 1/9.*m00*uy2 + 1/9.*m00*uz2 + 1/27.*m00 - ux2*uy2*uz2 - 1/3.*ux2*uy2 - 1/3.*ux2*uz2 - 1/9.*ux2 - 1/3.*uy2*uz2 - 1/9.*uy2 - 1/9.*uz2,
 ])
+"""
+# In updated Formats:
+hardcoded_cm_eq_incompressible_D3Q27 = Matrix([
+    m00,
+    ux*(1 - m00),
+    m00*ux2 + 1/3.*m00 - ux2,
+    uy*(1 - m00),
+    uxuy*(m00 - 1.),
+    uy*(-m00*ux2 - 1/3.*m00 + ux2 + 1/3.),
+    m00*uy2 + 1/3.*m00 - uy2,
+    ux*(-m00*uy2 - 1/3.*m00 + uy2 + 1/3.),
+    m00*ux2*uy2 + 1/3.*m00*ux2 + 1/3.*m00*uy2 + 1/9.*m00 - ux2*uy2 - 1/3.*ux2 - 1/3.*uy2,
+    uz*(1 - m00),
+    uxuz*(m00 - 1.),
+    uz*(-m00*ux2 - 1/3.*m00 + ux2 + 1/3.),
+    uyuz*(m00 - 1.),
+    uxuy*uz*(1 - m00),
+    uyuz*(m00*ux2 + 1/3.*m00 - ux2 - 1/3.),
+    uz*(-m00*uy2 - 1/3.*m00 + uy2 + 1/3.),
+    uxuz*(m00*uy2 + 1/3.*m00 - uy2 - 1/3.),
+    uz*(-m00*ux2*uy2 - 1/3.*m00*ux2 - 1/3.*m00*uy2 - 1/9.*m00 + ux2*uy2 + 1/3.*ux2 + 1/3.*uy2 + 1/9.),
+    m00*uz2 + 1/3.*m00 - uz2,
+    ux*(-m00*uz2 - 1/3.*m00 + uz2 + 1/3.),
+    m00*ux2*uz2 + 1/3.*m00*ux2 + 1/3.*m00*uz2 + 1/9.*m00 - ux2*uz2 - 1/3.*ux2 - 1/3.*uz2,
+    uy*(-m00*uz2 - 1/3.*m00 + uz2 + 1/3.),
+    uxuy*(m00*uz2 + 1/3.*m00 - uz2 - 1/3.),
+    uy*(-m00*ux2*uz2 - 1/3.*m00*ux2 - 1/3.*m00*uz2 - 1/9.*m00 + ux2*uz2 + 1/3.*ux2 + 1/3.*uz2 + 1/9.),
+    m00*uy2*uz2 + 1/3.*m00*uy2 + 1/3.*m00*uz2 + 1/9.*m00 - uy2*uz2 - 1/3.*uy2 - 1/3.*uz2,
+    ux*(-m00*uy2*uz2 - 1/3.*m00*uy2 - 1/3.*m00*uz2 - 1/9.*m00 + uy2*uz2 + 1/3.*uy2 + 1/3.*uz2 + 1/9.),
+    m00*ux2*uy2*uz2 + 1/3.*m00*ux2*uy2 + 1/3.*m00*ux2*uz2 + 1/9.*m00*ux2 + 1/3.*m00*uy2*uz2 + 1/9.*m00*uy2 + 1/9.*m00*uz2 + 1/27.*m00 - ux2*uy2*uz2 - 1/3.*ux2*uy2 - 1/3.*ux2*uz2 - 1/9.*ux2 - 1/3.*uy2*uz2 - 1/9.*uy2 - 1/9.*uz2,
+    ])
+
+hardcoded_F_cm_hydro_incompressible_D3Q27 = Matrix([
+    0,
+    Fx / rho,
+    0,
+    Fy / rho,
+    0,
+    1 / 3. * Fy / rho,
+    0,
+    1 / 3. * Fx / rho,
+    0,
+    Fz / rho,
+    0,
+    1 / 3. * Fz / rho,
+    0,
+    0,
+    0,
+    1 / 3. * Fz / rho,
+    0,
+    1 / 9. * Fz / rho,
+    0,
+    1 / 3. * Fx / rho,
+    0,
+    1 / 3. * Fy / rho,
+    0,
+    1 / 9. * Fy / rho,
+    0,
+    1 / 9. * Fx / rho,
+    0,
+    ])

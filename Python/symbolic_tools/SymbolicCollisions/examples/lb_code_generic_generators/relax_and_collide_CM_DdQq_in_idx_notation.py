@@ -16,7 +16,7 @@ import numpy as np
 d = 3
 q = 27
 
-pop_in_str = 'f'  # symbol defining populations
+pop_in_str = 'g'  # symbol defining populations
 temp_pop_str = 'temp'  # symbol defining populations
 cm_eq_pop_str = 'cm_eq'  # symbol defining populations
 

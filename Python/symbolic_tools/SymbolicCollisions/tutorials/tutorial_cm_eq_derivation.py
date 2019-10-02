@@ -9,7 +9,7 @@ from SymbolicCollisions.core.cm_symbols import rho, moments_dict
 import time
 
 
-lattice = 'D2Q9'
+lattice = 'D3Q27'
 ccmt = ContinuousCMTransforms(dzeta3D, u3D, F3D, rho)
 
 start = time.process_time()

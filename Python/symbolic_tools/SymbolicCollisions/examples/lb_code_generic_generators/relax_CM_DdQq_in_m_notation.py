@@ -21,7 +21,7 @@ m_seed = [0, 1, 2]
 rmoments_order = get_m_order_as_in_r(m_seed, m_seed, m_seed)
 q, d = rmoments_order.shape
 
-moments_order = np.array(moments_dict[f'D{d}Q{q}_tclb'])
+moments_order = np.array(moments_dict[f'D{d}Q{q}_r'])
 print(f"order of moments | rmoments: \n "
       f"{pd.concat([pd.DataFrame.from_records(moments_order),pd.DataFrame.from_records(rmoments_order)], axis=1)}")
 
@@ -78,16 +78,14 @@ hardcoded_cm_eq, hardcoded_F_cm = get_cm_eq_and_F_cm_switcher(model)
 
 # ARRANGE STUFF
 matrixGenerator = MatrixGenerator(ex_D3Q27new, ey_D3Q27new, ez_D3Q27new, moments_order)
-#Mraw = matrixGenerator.get_raw_moments_matrix()
-Mraw = np.genfromtxt("WMRT_matrix.csv", delimiter=',')
-Mraw[0,0] = 1
-Nraw = matrixGenerator.get_shift_matrix(np.linalg.inv(Mraw))
+Mraw = matrixGenerator.get_raw_moments_matrix()
+Nraw = matrixGenerator.get_shift_matrix()
 
 # from sympy import pprint
 # pprint(Mraw)  # see what you have done
 # pprint(Nraw)
 
-pop_in_str = 'g'  # symbol defining populations
+pop_in_str = 'g_neq'  # symbol defining populations
 temp_pop_str = 'temp'  # symbol defining populations
 cm_eq_pop_str = 'cm_eq'  # symbol defining populations
 
@@ -148,9 +146,9 @@ def make_collision(choice):
                               + S_Relax * hardcoded_cm_eq
                               + (eye(q) - S_Relax / 2) * hardcoded_F_cm,
 
-        'hydro_incompressible': (eye(q) - S_Relax) * temp_populations
-                                + S_Relax * hardcoded_cm_eq
-                                + (eye(q) - S_Relax / 2) * hardcoded_F_cm,
+        'hydro_incompressible': ( S_Relax) * temp_populations
+                                 - S_Relax * hardcoded_cm_eq,
+                              #  + (eye(q) - S_Relax / 2) * hardcoded_F_cm,
         # Relax 1st moments for ADE, SOI
         'ade_with_f': (eye(q) - S_Relax) * temp_populations
                       + S_Relax * hardcoded_cm_eq
@@ -174,7 +172,6 @@ print("\n\t//back to raw moments")
 print_as_vector(Nraw.inv() * populations, outprint_symbol=temp_pop_str, output_order_of_moments=moments_order)
 
 print("\n\t//back to density-probability functions")
-#print_as_vector(Mraw.inv() * temp_populations, outprint_symbol=pop_in_str, output_order_of_moments=rmoments_order)
-print_as_vector(np.linalg.inv(Mraw) * temp_populations, outprint_symbol=pop_in_str, output_order_of_moments=rmoments_order)
+print_as_vector(Mraw.inv() * temp_populations, outprint_symbol=pop_in_str, output_order_of_moments=rmoments_order)
 
 print("\n}\n")
