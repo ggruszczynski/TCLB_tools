@@ -160,3 +160,28 @@ class MatrixGenerator:
 
         cm_ = self.__matrix_maker(get_row)
         return Matrix(cm_)
+
+    def get_shift_matrix2(self, K=None):
+        """
+        See 'Generalized local equilibrium in the cascaded lattice Boltzmann method' by P. Asinari, 2008
+        or Incorporating forcing terms in cascaded lattice Boltzmann approach by method of central moments' by Kannan N. Premnath, Sanjoy Banerjee†, 2009
+        :param ex_: lattice vector
+        :param ey_:
+        :param ez_:
+        :return: the shift matrix for passing from the frame at rest to the moving frame
+        """
+        if K is None:
+            K = self.get_raw_moments_matrix().inv()  # transformation matrix, from moments to physical DF
+        d, q = self._check_dimensions()
+
+        def get_row(m, n, o):
+            def get_entry(m, n, o, column):
+                coeff = lambda i, m_, n_, o_: pow((self.ex[i] - ux), m_) * pow((self.ey[i] - uy), n_) * pow((self.ez[i] - uz), o_)
+                entry = sum([K[i, column] * coeff(i, m, n, o) for i in range(0, q)])
+                return round_and_simplify(entry)
+
+            row = [get_entry(m, n, o, i) for i in range(0, q)]
+            return row
+
+        cm_ = self.__matrix_maker(get_row)
+        return cm_

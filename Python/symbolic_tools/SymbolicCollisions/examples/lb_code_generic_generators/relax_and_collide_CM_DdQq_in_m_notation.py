@@ -25,8 +25,17 @@ moments_order = np.array(moments_dict[f'D{d}Q{q}_tclb'])
 print(f"order of moments | rmoments: \n "
       f"{pd.concat([pd.DataFrame.from_records(moments_order),pd.DataFrame.from_records(rmoments_order)], axis=1)}")
 
-e_seed = [0, 1, -1]
-ex_D3Q27new, ey_D3Q27new, ez_D3Q27new, e_D3Q27new = get_e_as_in_r(e_seed, e_seed, e_seed)
+# e_seed = [0, 1, -1]
+# ex_D3Q27new, ey_D3Q27new, ez_D3Q27new, e_D3Q27new = get_e_as_in_r(e_seed, e_seed, e_seed)
+
+# hardcode 'e' vectors as in WMRT matrix: ex=Mraw[1,:], ey = Mraw[2,:], ez=Mraw[3,:]
+ex_D3Q27new = Matrix([0 , 1,  -1,  0,  1,  -1,  0,  1,  -1,  0,  1,  -1,  0,  1,  -1,  0,  1,  -1,  0,  1,  -1,  0, 1,  -1,  0,  1,  -1])
+ey_D3Q27new = Matrix([0,  0,  0,  1,  1,  1,  -1,  -1,  -1,  0,  0,  0,  1,  1,  1,  -1,  -1,  -1,  0,  0,  0,  1,  1,  1,  -1,  -1,  -1])
+ez_D3Q27new = Matrix([0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1])
+# ez_D3Q27new = Matrix([0,  1,  1,  0,  1,  1,  0,  1,  1,  0,  1,  1,  0,  1,  1,  0,  1,  1,  0,  1,  1,  0,  1,  1,  0,  1,  1])
+e_D3Q27new = ex_D3Q27new.col_insert(1, ey_D3Q27new)
+e_D3Q27new = e_D3Q27new.col_insert(2, ez_D3Q27new)
+
 print(f"lattice velocities - e: \n {np.array(e_D3Q27new)}")
 
 
@@ -78,10 +87,12 @@ hardcoded_cm_eq, hardcoded_F_cm = get_cm_eq_and_F_cm_switcher(model)
 
 # ARRANGE STUFF
 matrixGenerator = MatrixGenerator(ex_D3Q27new, ey_D3Q27new, ez_D3Q27new, moments_order)
-#Mraw = matrixGenerator.get_raw_moments_matrix()
+# Mraw = matrixGenerator.get_raw_moments_matrix()
+# Nraw = matrixGenerator.get_shift_matrix(Mraw.inv())
 Mraw = np.genfromtxt("WMRT_matrix.csv", delimiter=',')
-Mraw[0,0] = 1
+Mraw[0, 0] = 1
 Nraw = matrixGenerator.get_shift_matrix(np.linalg.inv(Mraw))
+# Nraw = matrixGenerator.get_shift_matrix(Mraw.inv())
 
 # from sympy import pprint
 # pprint(Mraw)  # see what you have done
